@@ -30,7 +30,7 @@ export default function Hero() {
         {/* LEFT: Text */}
         <div className="space-y-6">
           <p className="text-indigo-600 font-medium tracking-wider uppercase text-sm dark:text-indigo-400">
-            Frontend & MERN Stack Developerr
+            Frontend & MERN Stack Developer
           </p>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
