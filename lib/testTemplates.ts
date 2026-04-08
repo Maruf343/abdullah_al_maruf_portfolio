@@ -1,7 +1,7 @@
 // Test file to preview email templates
 // Run this to see how the email template looks
 
-import { createContactEmailTemplate, createProjectInquiryTemplate } from './emailTemplates';
+import { createContactEmailTemplate } from './emailTemplates';
 
 // Example usage
 const contactEmail = createContactEmailTemplate(
@@ -10,13 +10,6 @@ const contactEmail = createContactEmailTemplate(
   "Hi! I'm interested in working with you on a React project. Please let me know your availability."
 );
 
-const projectEmail = createProjectInquiryTemplate(
-  "Jane Smith",
-  "jane@company.com",
-  "Web Application",
-  "We need a modern e-commerce platform built with Next.js and Stripe integration."
-);
-
-// Save these to HTML files to preview in browser
+// Save this to HTML files to preview in browser
 console.log("Contact email template created successfully!");
-console.log("Project inquiry template created successfully!");
+console.log(contactEmail);
