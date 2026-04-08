@@ -10,7 +10,7 @@ const projects = [
     description:
       "My personal portfolio built with Next.js and Tailwind CSS. Responsive and modern design with dark mode support.",
     image: "/images/portfoliScreenShort.PNG", // keep string for public folder
-    liveLink: "https://yourportfolio.com",
+    liveLink: "https://abdullahalmarufportfolio-mv3z9bteu-marufs-projects-0eed141e.vercel.app/",
   },
   {
     title: "Gardening Community Hub",
@@ -46,7 +46,7 @@ export default function Projects() {
         </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, index) => (
           <motion.article
             key={project.title}

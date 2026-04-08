@@ -80,11 +80,45 @@ export default function ContactForm() {
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="grid gap-10 rounded-[2rem] border border-indigo-200/20 bg-white/80 p-8 shadow-xl backdrop-blur-xl dark:border-indigo-500/20 dark:bg-gray-900/80 md:grid-cols-[1.2fr_0.8fr]"
+        className="grid gap-10 rounded-[2rem] border border-indigo-200/20 bg-white/80 p-6 sm:p-8 shadow-xl backdrop-blur-xl dark:border-indigo-500/20 dark:bg-gray-900/80
+                   grid-cols-1 md:grid-cols-[0.8fr_1.2fr] lg:gap-12"
       >
-        {/* LEFT SIDE */}
+        {/* LEFT SIDE: Get in Touch */}
+        <div className="rounded-[2rem] border border-indigo-200/20 bg-white/70 p-6 sm:p-8 backdrop-blur-xl dark:border-indigo-500/20 dark:bg-gray-900/70">
+          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
+            Get in Touch
+          </h3>
+
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div className="flex items-center gap-3">
+              <FaEnvelope className="text-indigo-600" />
+              <span className="break-words">abdullah.almaruf1121@gmail.com</span>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <FaPhoneAlt className="text-indigo-600" />
+              <span>+8801571350711</span>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <FaMapMarkerAlt className="text-indigo-600" />
+              <span>Tejgaon, Dhaka, Bangladesh</span>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <a
+              href="/cv.pdf"
+              target="_blank"
+              className="inline-flex justify-center w-full rounded-2xl bg-indigo-600 px-6 py-3 text-white font-semibold hover:bg-indigo-500 transition"
+            >
+              Download CV
+            </a>
+          </div>
+        </div>
+
+        {/* RIGHT SIDE: Contact Form */}
         <div className="space-y-6">
-          
           {/* Name */}
           <div className="relative">
             <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -132,7 +166,7 @@ export default function ContactForm() {
               onChange={handleChange}
               required
               placeholder=" "
-              className="peer w-full pl-12 p-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="peer w-full pl-12 p-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white resize-none"
             />
             <label className="absolute left-12 top-3 text-gray-500 text-sm transition-all 
               peer-placeholder-shown:top-5 peer-placeholder-shown:text-base 
@@ -149,40 +183,6 @@ export default function ContactForm() {
           >
             {loading ? "Sending..." : "Send Message"}
           </button>
-        </div>
-
-        {/* RIGHT SIDE */}
-        <div className="rounded-[2rem] border border-indigo-200/20 bg-white/70 p-8 backdrop-blur-xl dark:border-indigo-500/20 dark:bg-gray-900/70">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
-            Get in Touch
-          </h3>
-
-          <div className="space-y-4 text-gray-700 dark:text-gray-300">
-            <div className="flex items-center gap-3">
-              <FaEnvelope className="text-indigo-600" />
-              <span>abdullah.almaruf1121@gmail.com</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <FaPhoneAlt className="text-indigo-600" />
-              <span>+8801571350711</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <FaMapMarkerAlt className="text-indigo-600" />
-              <span>Tejgaon, Dhaka, Bangladesh</span>
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <a
-              href="/cv.pdf"
-              target="_blank"
-              className="inline-flex justify-center w-full rounded-2xl bg-indigo-600 px-6 py-3 text-white font-semibold hover:bg-indigo-500 transition"
-            >
-              Download CV
-            </a>
-          </div>
         </div>
       </motion.form>
     </section>

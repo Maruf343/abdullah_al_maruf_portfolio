@@ -77,7 +77,7 @@ export default function TechNews() {
             <p className="text-red-600 dark:text-red-400">{error}</p>
           </div>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {articles.map((article, index) => (
               <motion.div
                 key={index}

@@ -127,7 +127,7 @@ export default function Skills() {
               {category.skills.map(skill => (
                 <motion.div
                   key={skill.name}
-                  className="flex flex-col w-full md:w-60 bg-white/80 dark:bg-gray-900/70 rounded-2xl shadow-lg p-4 cursor-pointer border border-gray-200/30 dark:border-gray-800/30 backdrop-blur-md hover:scale-105 hover:shadow-indigo-400/30 transition-all duration-300"
+                  className="flex flex-col w-full sm:w-48 md:w-56 lg:w-64 bg-white/80 dark:bg-gray-900/70 rounded-2xl shadow-lg p-4 cursor-pointer border border-gray-200/30 dark:border-gray-800/30 backdrop-blur-md hover:scale-105 hover:shadow-indigo-400/30 transition-all duration-300"
                   whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(0,0,0,0.2)" }}
                 >
                   <div className="flex items-center gap-3 mb-2">

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { createContactEmailTemplate } from "../../../lib/emailTemplates";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -16,12 +17,16 @@ export async function POST(request: Request) {
     },
   });
 
+  // Create HTML email template
+  const htmlContent = createContactEmailTemplate(name, email, message);
+
   // Email options
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER, // Send to yourself
-    subject: `New Contact Form Message from ${name}`,
-    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    subject: `🚀 New Contact: ${name} wants to connect!`,
+    html: htmlContent,
+    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`, // Fallback for email clients that don't support HTML
   };
 
   try {

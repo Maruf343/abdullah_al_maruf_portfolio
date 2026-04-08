@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-slate-50 text-slate-950 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
         <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 md:px-8">
           <Navbar />
-          <main className="flex-1 pt-24">{children}</main>
+          <main className="flex-1 pt-20 md:pt-24">{children}</main>
           <Footer />
         </div>
         <FloatingWhatsApp />

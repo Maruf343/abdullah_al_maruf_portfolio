@@ -7,7 +7,7 @@ import ContactForm from "../../components/sections/ContactForm";
 
 export default function HomePage() {
   return (
-    <div className="space-y-24 pb-24">
+    <div className="space-y-16 sm:space-y-20 md:space-y-24 pb-16 sm:pb-20 md:pb-24">
       <Hero />
       <Projects />
       <AboutMe />
