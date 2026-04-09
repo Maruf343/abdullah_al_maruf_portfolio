@@ -19,14 +19,14 @@ import {
 // Online workspace image
 const workspaceImg = "/images/developer-workspace.jpg";
 
-const features = [
+const features: { iconName: "code" | "lightbulb" | "users" | "bolt"; label: string; desc: string }[] = [
   { iconName: "code", label: "Clean Code", desc: "Readable & maintainable architecture" },
   { iconName: "lightbulb", label: "Design Driven", desc: "Pixel-perfect modern UI" },
   { iconName: "users", label: "User Focused", desc: "Intuitive digital experiences" },
   { iconName: "bolt", label: "Performance", desc: "Blazing fast applications" },
 ];
 
-const getFeatureIcon = (iconName) => {
+const getFeatureIcon = (iconName: "code" | "lightbulb" | "users" | "bolt") => {
   const icons = {
     code: <FaCode className="h-5 w-5" />,
     lightbulb: <FaLightbulb className="h-5 w-5" />,
@@ -36,13 +36,13 @@ const getFeatureIcon = (iconName) => {
   return icons[iconName];
 };
 
-const highlights = [
+const highlights: { iconName: "briefcase" | "graduationcap" | "award"; text: string }[] = [
   { iconName: "briefcase", text: "Full-Stack Web Development" },
   { iconName: "graduationcap", text: "Continuous Learner & Problem Solver" },
   { iconName: "award", text: "Passionate About Clean UI/UX" },
 ];
 
-const getHighlightIcon = (iconName) => {
+const getHighlightIcon = (iconName: "briefcase" | "graduationcap" | "award") => {
   const icons = {
     briefcase: <FaBriefcase className="h-4 w-4" />,
     graduationcap: <FaGraduationCap className="h-4 w-4" />,
