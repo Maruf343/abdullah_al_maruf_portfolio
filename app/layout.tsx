@@ -20,14 +20,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/images/favicon.png",
-    apple: "/images/favicon.png",
+    apple: "/images/favicon-circle.svg",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-slate-50 text-slate-950 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+      <body className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-950 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
         <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 md:px-8">
           <Navbar />
           <main className="flex-1 pt-20 md:pt-24">{children}</main>

@@ -1,225 +1,267 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import { FaCode, FaLightbulb, FaUsers, FaFileAlt, FaGithub, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
-import aboutMe from "../../public/images/about-me.png";
+import {
+  FaCode,
+  FaLightbulb,
+  FaUsers,
+  FaFileAlt,
+  FaTimes,
+  FaStar,
+  FaBolt,
+  FaDownload,
+  FaExternalLinkAlt,
+  FaBriefcase,
+  FaGraduationCap,
+  FaAward,
+} from "react-icons/fa";
+
+// Online workspace image
+const workspaceImg = "/images/developer-workspace.jpg";
+
+const features = [
+  { iconName: "code", label: "Clean Code", desc: "Readable & maintainable architecture" },
+  { iconName: "lightbulb", label: "Design Driven", desc: "Pixel-perfect modern UI" },
+  { iconName: "users", label: "User Focused", desc: "Intuitive digital experiences" },
+  { iconName: "bolt", label: "Performance", desc: "Blazing fast applications" },
+];
+
+const getFeatureIcon = (iconName) => {
+  const icons = {
+    code: <FaCode className="h-5 w-5" />,
+    lightbulb: <FaLightbulb className="h-5 w-5" />,
+    users: <FaUsers className="h-5 w-5" />,
+    bolt: <FaBolt className="h-5 w-5" />,
+  };
+  return icons[iconName];
+};
+
+const highlights = [
+  { iconName: "briefcase", text: "Full-Stack Web Development" },
+  { iconName: "graduationcap", text: "Continuous Learner & Problem Solver" },
+  { iconName: "award", text: "Passionate About Clean UI/UX" },
+];
+
+const getHighlightIcon = (iconName) => {
+  const icons = {
+    briefcase: <FaBriefcase className="h-4 w-4" />,
+    graduationcap: <FaGraduationCap className="h-4 w-4" />,
+    award: <FaAward className="h-4 w-4" />,
+  };
+  return icons[iconName];
+};
+
+const techStack = ["React", "Next.js", "TypeScript", "Tailwind CSS", "Node.js", "MongoDB"];
+
+const stats = [
+  { value: "1+", label: "Years Experience" },
+  { value: "11+", label: "Projects Delivered" },
+  { value: "100%", label: "Client Satisfaction" },
+];
+
+const CV_PDF_URL = "/images/Mohammad_abdullah_al_maruf (1).pdf";
 
 export default function AboutMe() {
   const [cvOpen, setCvOpen] = useState(false);
 
   return (
-    <section className="relative overflow-hidden min-h-screen px-4 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-20 md:py-24 bg-gradient-to-br from-slate-50 via-white to-indigo-50 dark:from-slate-950 dark:via-gray-900 dark:to-slate-950">
+    <section className="relative overflow-hidden px-4 sm:px-6 lg:px-10 py-20 md:py-28 section-gradient min-h-screen flex items-center">
 
-      {/* Glow Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 h-[300px] w-[300px] sm:h-[420px] sm:w-[420px] bg-indigo-500/10 blur-3xl" />
-      </div>
+      {/* Glow blobs */}
+      <div className="absolute top-10 left-1/3 h-[320px] w-[320px] sm:h-[500px] sm:w-[500px] bg-indigo-500/10 blur-3xl rounded-full animate-pulse" />
+      <div className="absolute bottom-20 right-1/4 h-[250px] w-[250px] sm:h-[350px] sm:w-[350px] bg-indigo-500/5 blur-3xl rounded-full animate-pulse" />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="relative max-w-7xl mx-auto"
-      >
+      <div className="relative max-w-6xl mx-auto w-full">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
-          <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">
-            About Me
-          </p>
-          <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-950 dark:text-white">
-            Building polished web experiences with modern UI & strong UX.
+        <div className="text-center mb-16 md:mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-600/10 border border-indigo-600/20 mb-6">
+            <FaStar className="h-3.5 w-3.5 text-indigo-600" />
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-indigo-600">About Me</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight">
+            Crafting digital <br />
+            <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+              experiences
+            </span>{" "}
+            that matter.
           </h2>
+          <p className="mt-4 text-slate-600 dark:text-slate-300 text-base md:text-lg max-w-2xl mx-auto">
+            Turning complex problems into elegant, scalable solutions with modern technologies and a keen eye for design.
+          </p>
         </div>
 
-        {/* Main Grid */}
-        <div className="grid gap-8 sm:gap-12 md:gap-16 lg:grid-cols-[1.2fr_0.8fr] items-start">
+        {/* Grid */}
+        <div className="grid gap-10 md:gap-12 lg:gap-16 md:grid-cols-1 lg:grid-cols-2 items-start">
 
-          {/* LEFT CONTENT */}
-          <div className="space-y-6 sm:space-y-8 text-slate-700 dark:text-slate-300">
-            <p className="text-base sm:text-lg leading-7 sm:leading-9">
-              I’m <span className="font-semibold text-indigo-600">Maruf</span>, a full-stack developer focusing on scalable, performant, and aesthetic web applications.
-            </p>
-            <p className="text-base sm:text-lg leading-7 sm:leading-9">
-              I love converting ideas into seamless digital experiences that are easy to use, maintain, and delight users.
-            </p>
+          {/* LEFT */}
+          <div className="space-y-8">
+            {/* Bio */}
+            <div className="space-y-4 text-slate-700 dark:text-slate-300 text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 text-center lg:text-left">
+              <p>
+                Hi, I'm <span className="font-semibold text-indigo-600">Maruf</span> — a passionate full-stack developer dedicated to building scalable, performant, and beautifully designed web applications.
+              </p>
+              <p>
+                I specialize in transforming ideas into production-ready digital products with a strong emphasis on clean code, intuitive user interfaces, and exceptional user experiences.
+              </p>
+            </div>
 
-            {/* Features */}
-            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2">
-              {[
-                { icon: <FaCode />, label: "Clean code" },
-                { icon: <FaLightbulb />, label: "Design-driven" },
-                { icon: <FaUsers />, label: "User-focused" },
-                { icon: <FaCode />, label: "Performance first" },
-              ].map((item) => (
-                <motion.div
-                  key={item.label}
-                  whileHover={{ scale: 1.05 }}
-                  className="rounded-3xl border border-slate-200 bg-white/90 p-4 sm:p-6 shadow-lg dark:border-slate-800 dark:bg-slate-900/80 transition-all"
-                >
-                  <div className="inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-600">
-                    {item.icon}
+            {/* Highlights */}
+            <div className="space-y-3 max-w-md mx-auto lg:mx-0">
+              {highlights.map((item) => (
+                <div key={item.text} className="flex items-center gap-3">
+                  <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-600">
+                    {getHighlightIcon(item.iconName)}
                   </div>
-                  <p className="mt-3 sm:mt-4 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white">
-                    {item.label}
-                  </p>
-                </motion.div>
+                  <span className="text-sm font-medium text-slate-900 dark:text-white">{item.text}</span>
+                </div>
               ))}
             </div>
 
-            {/* Terminal Card */}
-            <div className="rounded-2xl bg-gray-900 text-gray-100 border border-white/10 overflow-hidden font-mono shadow-xl">
-              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-800">
+            {/* Feature cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto lg:mx-0">
+              {features.map((item) => (
+                <div key={item.label} className="glass-card-hover rounded-2xl p-4 text-center">
+                  <div className="h-10 w-10 mx-auto flex items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600 mb-2">
+                    {getFeatureIcon(item.iconName)}
+                  </div>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white">{item.label}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Terminal card */}
+            <div className="w-full max-w-md mx-auto lg:mx-0 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-2 px-4 py-2.5 bg-gray-800">
                 <span className="w-3 h-3 bg-red-500 rounded-full" />
                 <span className="w-3 h-3 bg-yellow-500 rounded-full" />
                 <span className="w-3 h-3 bg-green-500 rounded-full" />
-                <span className="ml-2 text-xs sm:text-sm text-gray-400">aboutMe.ts</span>
+                <span className="ml-2 text-gray-400 text-xs font-mono">aboutMe.ts</span>
               </div>
-              <pre className="p-3 sm:p-4 text-xs sm:text-sm leading-relaxed">
+              <pre className="p-4 bg-gray-900 text-gray-100 text-sm font-mono leading-relaxed">
 {`const developer = {
   name: "Maruf",
   role: "Full-Stack Developer",
-  stack: ["React", "Next.js", "Node.js", "MongoDB"],
-  mindset: "Clean Code • Scalable UI • UX First"
+  stack: ["React", "Next.js", "Node.js"],
+  mindset: "Clean • Scalable • UX First"
 };`}
               </pre>
             </div>
           </div>
 
-          {/* RIGHT CONTENT */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6 sm:space-y-8"
-          >
-            {/* Image Card */}
-            <div className="relative rounded-[2rem] border border-slate-200 bg-white/90 p-4 sm:p-6 shadow-xl backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/80 hover:scale-105 transition-transform">
-              <div className="relative flex justify-center">
-                <div className="rounded-3xl overflow-hidden w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 shadow-2xl">
-                  <Image
-                    src={aboutMe}
-                    alt="Maruf"
-                    className="object-cover"
-                    width={320}
-                    height={320}
-                    priority
-                  />
-                </div>
+          {/* RIGHT */}
+          <div className="space-y-6 flex flex-col items-center">
+            {/* Workspace image */}
+            <div className="hidden md:block w-full max-w-sm rounded-3xl glass-card p-5">
+              <div className="relative w-full aspect-square rounded-2xl overflow-hidden ring-4 ring-indigo-500/10">
+                <img
+                  src={workspaceImg}
+                  alt="Modern developer workspace"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
-            {/* Core Stack + CV */}
-            <div className="rounded-3xl bg-slate-100 p-4 sm:p-6 dark:bg-slate-900 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
-              <div>
-                <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">
-                  Core Stack
-                </p>
-                <div className="mt-4 sm:mt-6 flex flex-wrap gap-2 sm:gap-3">
-                  {["React", "Next.js", "Tailwind", "Node.js", "MongoDB"].map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm bg-indigo-500/10 text-indigo-600 border border-indigo-500/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+            {/* Tech stack + CV */}
+            <div className="w-full max-w-md rounded-2xl glass-card p-5 space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500 text-center">Core Stack</p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-600 border border-indigo-500/20"
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
-              <button
-                onClick={() => setCvOpen(true)}
-                className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-2xl shadow-lg hover:bg-indigo-500 transition"
-              >
-                <FaFileAlt /> View CV
-              </button>
+              <div className="flex justify-center pt-2">
+                <button
+                  onClick={() => setCvOpen(true)}
+                  className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all"
+                >
+                  <FaFileAlt className="h-4 w-4" /> View CV
+                </button>
+              </div>
             </div>
 
             {/* Stats */}
-            <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-2">
-              {[{ value: "1+", label: "Years" }, { value: "11+", label: "Projects" }].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-3xl border border-slate-200 bg-white p-3 sm:p-5 text-center shadow-sm dark:border-slate-800 dark:bg-slate-950"
-                >
-                  <p className="text-lg sm:text-2xl font-semibold text-indigo-600">{stat.value}</p>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">{stat.label}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-md">
+              {stats.map((stat) => (
+                <div key={stat.label} className="rounded-2xl glass-card p-5 text-center">
+                  <p className="text-2xl font-bold text-indigo-600">{stat.value}</p>
+                  <p className="text-xs text-slate-500 mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
-          </motion.div>
+
+            {/* Philosophy quote */}
+            <div className="w-full max-w-md rounded-2xl glass-card p-5 text-center">
+              <p className="text-sm italic text-slate-500 leading-relaxed">
+                "Great software is not just about code — it's about understanding users, solving real problems, and delivering experiences that feel effortless."
+              </p>
+              <p className="text-xs font-semibold text-indigo-600 mt-3">— Maruf</p>
+            </div>
+          </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* CV Modal */}
-      <AnimatePresence>
-        {cvOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-            onClick={() => setCvOpen(false)}
+      {cvOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-4"
+          onClick={() => setCvOpen(false)}
+        >
+          <div
+            className="bg-white dark:bg-gray-900 rounded-3xl max-w-4xl w-full shadow-2xl border border-slate-200 dark:border-slate-800 relative flex flex-col"
+            style={{ maxHeight: "90vh" }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 max-w-5xl w-full relative overflow-auto max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-                  My Resume
-                </h3>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 flex items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600">
+                  <FaFileAlt className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">My Resume</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Maruf</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={CV_PDF_URL}
+                  download
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-500/10 text-indigo-600 hover:bg-indigo-500/20 transition-colors"
+                >
+                  <FaDownload className="h-3.5 w-3.5" /> Download
+                </a>
+                <a
+                  href={CV_PDF_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-500/10 text-indigo-600 hover:bg-indigo-500/20 transition-colors"
+                >
+                  <FaExternalLinkAlt className="h-3.5 w-3.5" /> Open
+                </a>
                 <button
                   onClick={() => setCvOpen(false)}
-                  className="text-gray-500 hover:text-gray-900 dark:hover:text-white font-bold text-xl sm:text-2xl p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+                  className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700 hover:bg-red-500 hover:text-white transition-colors"
                 >
-                  ✕
+                  <FaTimes className="h-4 w-4" />
                 </button>
               </div>
-
-              {/* Embedded CV content */}
-              <div className="space-y-4 text-sm sm:text-base leading-relaxed overflow-y-auto max-h-[75vh] pr-2">
-                <p>
-                  <strong>Enthusiastic Frontend Developer</strong> with a solid foundation in JavaScript, React, and MERN stack development. Experienced in building responsive, user-friendly web applications using React Router, Tailwind CSS, Firebase Authentication, and REST APIs through personal projects.
-                </p>
-                <p>Passionate about clean code, problem-solving, and continuous learning, aiming to contribute to innovative development teams and grow into a full-stack role.</p>
-
-                <h4 className="font-semibold mt-4">Professional Experience</h4>
-                <p><strong>Digi5 Ltd (3 Months) — Frontend Developer (MERN Stack)</strong></p>
-                <ul className="list-disc list-inside">
-                  <li>Developed responsive UIs using HTML, CSS, and JavaScript.</li>
-                  <li>Fixed UI/UX issues and improved website usability.</li>
-                  <li>Created a full-stack Food Sharing system: users can donate or request food, with secure dashboards and real-time updates.</li>
-                  <li>Built Garden Community project: allowed members to share gardening tips, events, and community updates.</li>
-                  <li>Implemented Tailwind CSS, React Router, Axios for seamless UX.</li>
-                </ul>
-
-                <h4 className="font-semibold mt-4">Skills & Tools</h4>
-                <p>Frontend: React, Next.js, JavaScript</p>
-                <p>Backend & Database: Node.js, Express.js, MongoDB</p>
-                <p>Styling/UI: Tailwind CSS, Responsive Design, UI/UX Principles</p>
-                <p>Authentication & Hosting: Firebase Authentication</p>
-
-                <h4 className="font-semibold mt-4">Education</h4>
-                <p><strong>Govt. Titumir College — BA Honors Islamic History & Culture</strong> (2025 – Present)</p>
-                <p><strong>Programming Hero — MERN Stack Web Development</strong> (Graduated Aug 2025)</p>
-                <p><strong>PencilBox Training Institute — Web Design & Development</strong> (March 2024)</p>
-
-                <h4 className="font-semibold mt-4">Contact & Links</h4>
-                <p className="flex items-center gap-2"><FaPhoneAlt /> 01571350711</p>
-                <p className="flex items-center gap-2"><FaEnvelope /> abdullah.almaruf1121@gmail.com</p>
-                <p className="flex items-center gap-2"><FaGithub /> <a href="https://github.com/Maruf343" target="_blank" className="text-indigo-600 hover:underline">https://github.com/Maruf343</a></p>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </div>
+            <div className="flex-1 overflow-hidden rounded-b-3xl">
+              <iframe
+                src={CV_PDF_URL}
+                className="w-full h-full border-0"
+                style={{ minHeight: "60vh" }}
+                title="Resume - Maruf"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

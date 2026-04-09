@@ -13,11 +13,13 @@ html {
 }
 
 html, body {
+  overflow-x: hidden;
   background-color: var(--bg-light);
   color: var(--text-light);
 }
 
 .dark html, .dark body {
+  overflow-x: hidden;
   background-color: #0f172a; /* gray-900 */
   color: #ffffff;
 }

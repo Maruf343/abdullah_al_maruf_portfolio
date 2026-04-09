@@ -1,12 +1,12 @@
 "use client";
 
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
   return (
     <footer
       id="footer"
-      className="mt-10 w-full border-t border-slate-200 bg-white/80 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/80"
+      className="w-full border-t border-slate-200 bg-white/80 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/80"
     >
       <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
 
@@ -44,12 +44,12 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://twitter.com"
+            href="https://www.facebook.com/Abdullah.Maruf3434"
             target="_blank"
             rel="noreferrer"
             className="group p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500 transition"
           >
-            <FaTwitter className="text-slate-600 dark:text-slate-300 group-hover:text-white transition" size={18} />
+            <FaFacebook className="text-slate-600 dark:text-slate-300 group-hover:text-white transition" size={18} />
           </a>
         </div>
       </div>

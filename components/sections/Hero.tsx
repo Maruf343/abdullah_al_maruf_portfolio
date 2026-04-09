@@ -24,52 +24,68 @@ export default function Hero() {
   }, [index]);
 
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-indigo-50 to-white p-8 md:p-16 shadow-lg dark:from-gray-900 dark:to-gray-950">
-      <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+    <section className="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-indigo-50 to-white p-4 sm:p-8 md:p-16 shadow-lg dark:from-gray-900 dark:to-gray-950">
+      
+      <div className="relative z-10 grid lg:grid-cols-2 gap-10 items-center">
 
-        {/* LEFT: Text */}
-        <div className="space-y-6">
+        {/* LEFT: TEXT */}
+        <div className="space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
+
           <p className="text-indigo-600 font-medium tracking-wider uppercase text-sm dark:text-indigo-400">
             Frontend & MERN Stack Developer
           </p>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
             {typed.split(" ").slice(0, -1).join(" ")}{" "}
-            <span className="text-indigo-500">{typed.split(" ").slice(-1).join(" ")}</span>
+            <span className="text-indigo-500">
+              {typed.split(" ").slice(-1).join(" ")}
+            </span>
             <span className="blinking-cursor">|</span>
           </h1>
 
-          <p className="text-gray-700 dark:text-gray-300 max-w-xl text-lg leading-relaxed">
-            I build <span className="font-semibold text-indigo-500">modern, responsive, high-performance</span> web applications with{" "}
-            <span className="font-semibold text-indigo-500">MongoDB, Express, React, Next.js, Node.js</span>. 
-            Clean code, fast interfaces, and elegant UI are my focus.
+          <p className="text-gray-700 dark:text-gray-300 max-w-xl text-base sm:text-lg leading-relaxed">
+            I build{" "}
+            <span className="font-semibold text-indigo-500">
+              modern, responsive, high-performance
+            </span>{" "}
+            web applications with{" "}
+            <span className="font-semibold text-indigo-500">
+              MongoDB, Express, React, Next.js, Node.js
+            </span>.
           </p>
 
-          <div className="flex flex-wrap gap-4 mt-4">
+          {/* BUTTONS */}
+          <div className="flex flex-wrap gap-4 mt-4 justify-center lg:justify-start">
             <Button href="#projects">View Projects</Button>
             <Button href="#about" variant="ghost">About Me</Button>
           </div>
 
-          {/* Floating Tech Icons */}
-          <div className="flex gap-4 mt-8 flex-wrap">
-            <FaReact className="text-indigo-500 w-8 h-8 animate-bounce-slow" />
-            <SiNextdotjs className="text-black dark:text-white w-8 h-8 animate-bounce-slow" />
-            <SiTailwindcss className="text-teal-400 w-8 h-8 animate-bounce-slow" />
-            <FaNodeJs className="text-green-600 w-8 h-8 animate-bounce-slow" />
-            <SiMongodb className="text-green-700 w-8 h-8 animate-bounce-slow" />
+          {/* ICONS */}
+          <div className="flex gap-4 mt-6 flex-wrap justify-center lg:justify-start">
+            <FaReact className="text-indigo-500 w-7 h-7 sm:w-8 sm:h-8 animate-bounce-slow" />
+            <SiNextdotjs className="text-black dark:text-white w-7 h-7 sm:w-8 sm:h-8 animate-bounce-slow" />
+            <SiTailwindcss className="text-teal-400 w-7 h-7 sm:w-8 sm:h-8 animate-bounce-slow" />
+            <FaNodeJs className="text-green-600 w-7 h-7 sm:w-8 sm:h-8 animate-bounce-slow" />
+            <SiMongodb className="text-green-700 w-7 h-7 sm:w-8 sm:h-8 animate-bounce-slow" />
           </div>
         </div>
 
-        {/* RIGHT: Image */}
+        {/* RIGHT: IMAGE */}
         <div className="relative flex justify-center items-center">
-          <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem] rounded-full overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
-            <Image src={heroImg} alt="Mohammad Abdullah Al Maruf" className="object-cover" priority />
+          <div className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
+            <Image
+              src={heroImg}
+              alt="Mohammad Abdullah Al Maruf"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
         </div>
 
       </div>
 
-      {/* Cursor Animation */}
+      {/* ANIMATION */}
       <style jsx>{`
         .blinking-cursor {
           margin-left: 5px;
