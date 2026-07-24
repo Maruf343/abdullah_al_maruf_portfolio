@@ -1,8 +1,9 @@
 import { prisma } from "../../../lib/prisma";
+import { withDbFallback } from "../../../lib/dbSafe";
 import HeroContentForm from "./HeroContentForm";
 
 export default async function AdminHeroPage() {
-  const content = await prisma.heroContent.findFirst();
+  const content = await withDbFallback(() => prisma.heroContent.findFirst(), null);
 
   return (
     <div className="space-y-6">

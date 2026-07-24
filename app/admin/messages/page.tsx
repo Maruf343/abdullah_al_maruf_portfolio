@@ -1,6 +1,7 @@
 import { auth } from "../../../auth";
 import { redirect } from "next/navigation";
 import { prisma } from "../../../lib/prisma";
+import { withDbFallback } from "../../../lib/dbSafe";
 import { markMessageAsRead, sendReply } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -12,9 +13,13 @@ export default async function AdminMessagesPage() {
     redirect("/admin/login");
   }
 
-  const messages = await prisma.message.findMany({
-    orderBy: [{ read: "asc" }, { createdAt: "desc" }],
-  });
+  const messages = await withDbFallback(
+    () =>
+      prisma.message.findMany({
+        orderBy: [{ read: "asc" }, { createdAt: "desc" }],
+      }),
+    []
+  );
 
   return (
     <div className="space-y-6">

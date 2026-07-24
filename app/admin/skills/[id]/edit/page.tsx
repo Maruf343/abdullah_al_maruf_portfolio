@@ -1,11 +1,12 @@
 import { redirect } from "next/navigation";
 import { prisma } from "../../../../../lib/prisma";
+import { withDbFallback } from "../../../../../lib/dbSafe";
 import EditSkillForm from "./EditSkillForm";
 
 export default async function EditSkillPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const skillId = Number(id);
-  const skill = await prisma.skill.findUnique({ where: { id: skillId } });
+  const skill = await withDbFallback(() => prisma.skill.findUnique({ where: { id: skillId } }), null);
 
   if (!skill) {
     redirect("/admin/skills");

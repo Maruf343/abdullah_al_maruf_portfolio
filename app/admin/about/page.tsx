@@ -1,8 +1,9 @@
 import { prisma } from "../../../lib/prisma";
+import { withDbFallback } from "../../../lib/dbSafe";
 import AboutContentForm from "./AboutContentForm";
 
 export default async function AdminAboutPage() {
-  const content = await prisma.aboutContent.findFirst();
+  const content = await withDbFallback(() => prisma.aboutContent.findFirst(), null);
 
   return (
     <div className="space-y-6">

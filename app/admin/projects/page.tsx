@@ -1,11 +1,16 @@
 import Link from "next/link";
 import { prisma } from "../../../lib/prisma";
+import { withDbFallback } from "../../../lib/dbSafe";
 import DeleteProjectButton from "./DeleteProjectButton";
 
 export default async function AdminProjectsPage() {
-  const projects = await prisma.project.findMany({
-    orderBy: [{ order: "asc" }, { createdAt: "desc" }],
-  });
+  const projects = await withDbFallback(
+    () =>
+      prisma.project.findMany({
+        orderBy: [{ order: "asc" }, { createdAt: "desc" }],
+      }),
+    []
+  );
 
   return (
     <div className="space-y-6">

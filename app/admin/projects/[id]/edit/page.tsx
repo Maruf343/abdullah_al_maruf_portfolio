@@ -1,11 +1,12 @@
 import { redirect } from "next/navigation";
 import { prisma } from "../../../../../lib/prisma";
+import { withDbFallback } from "../../../../../lib/dbSafe";
 import EditProjectForm from "./EditProjectForm";
 
 export default async function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const projectId = Number(id);
-  const project = await prisma.project.findUnique({ where: { id: projectId } });
+  const project = await withDbFallback(() => prisma.project.findUnique({ where: { id: projectId } }), null);
 
   if (!project) {
     redirect("/admin/projects");

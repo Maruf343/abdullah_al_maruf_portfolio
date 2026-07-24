@@ -1,6 +1,7 @@
 import { auth } from "../../auth";
 import { redirect } from "next/navigation";
 import { prisma } from "../../lib/prisma";
+import { withDbFallback } from "../../lib/dbSafe";
 
 export default async function AdminPage() {
   const session = await auth();
@@ -10,9 +11,9 @@ export default async function AdminPage() {
   }
 
   const [projectCount, messageCount, unreadCount] = await Promise.all([
-    prisma.project.count(),
-    prisma.message.count(),
-    prisma.message.count({ where: { read: false } }),
+    withDbFallback(() => prisma.project.count(), 0),
+    withDbFallback(() => prisma.message.count(), 0),
+    withDbFallback(() => prisma.message.count({ where: { read: false } }), 0),
   ]);
 
   const cards = [

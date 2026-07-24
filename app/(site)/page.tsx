@@ -5,17 +5,22 @@ import Skills from "../../components/sections/Skills";
 import TechNews from "../../components/sections/TechNews";
 import ContactForm from "../../components/sections/ContactForm";
 import { prisma } from "../../lib/prisma";
+import { withDbFallback } from "../../lib/dbSafe";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const [heroContent, projects, aboutContent, skills] = await Promise.all([
-    prisma.heroContent.findFirst(),
-    prisma.project.findMany({
-      orderBy: [{ featured: "desc" }, { order: "asc" }],
-    }),
-    prisma.aboutContent.findFirst(),
-    prisma.skill.findMany({ orderBy: [{ category: "asc" }, { order: "asc" }] }),
+    withDbFallback(() => prisma.heroContent.findFirst(), null),
+    withDbFallback(
+      () =>
+        prisma.project.findMany({
+          orderBy: [{ featured: "desc" }, { order: "asc" }],
+        }),
+      []
+    ),
+    withDbFallback(() => prisma.aboutContent.findFirst(), null),
+    withDbFallback(() => prisma.skill.findMany({ orderBy: [{ category: "asc" }, { order: "asc" }] }), []),
   ]);
 
   return (

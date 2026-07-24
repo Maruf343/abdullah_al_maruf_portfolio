@@ -1,12 +1,17 @@
 import Projects from "../../../components/sections/Projects";
 import { prisma } from "../../../lib/prisma";
+import { withDbFallback } from "../../../lib/dbSafe";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
-  const projects = await prisma.project.findMany({
-    orderBy: [{ featured: "desc" }, { order: "asc" }],
-  });
+  const projects = await withDbFallback(
+    () =>
+      prisma.project.findMany({
+        orderBy: [{ featured: "desc" }, { order: "asc" }],
+      }),
+    []
+  );
 
   return (
     <div className="space-y-10 pb-10">
