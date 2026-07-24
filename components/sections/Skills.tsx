@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FaReact, FaNodeJs, FaDatabase, FaJsSquare } from "react-icons/fa";
-import { SiNextdotjs, SiTailwindcss, SiFirebase, SiMongodb, SiExpress } from "react-icons/si";
+import { FaReact, FaNodeJs, FaDatabase } from "react-icons/fa";
 import { useRef, useEffect, useState } from "react";
+import SkillIcon from "../ui/SkillIcon";
 
 interface Particle {
   id: number;
@@ -14,41 +14,31 @@ interface Particle {
   opacity: number;
 }
 
-const skillCategories = [
-  {
-    category: "Frontend",
-    glowColor: "rgba(99,102,241,0.18)",
-    icon: <FaReact size={28} className="text-indigo-500" />,
-    skills: [
-      { name: "React", level: 95, icon: <FaReact className="text-indigo-500 w-6 h-6" /> },
-      { name: "Next.js", level: 90, icon: <SiNextdotjs className="w-6 h-6 text-indigo-600" /> },
-      { name: "Tailwind CSS", level: 95, icon: <SiTailwindcss className="w-6 h-6 text-indigo-400" /> },
-      { name: "TypeScript", level: 88, icon: <FaJsSquare className="text-yellow-400 w-6 h-6" /> },
-    ],
-  },
-  {
-    category: "Backend",
-    glowColor: "rgba(34,197,94,0.15)",
-    icon: <FaNodeJs size={28} className="text-green-500" />,
-    skills: [
-      { name: "Node.js", level: 85, icon: <FaNodeJs className="text-green-500 w-6 h-6" /> },
-      { name: "Express.js", level: 82, icon: <SiExpress className="w-6 h-6 text-green-400" /> },
-      { name: "Firebase", level: 80, icon: <SiFirebase className="w-6 h-6 text-indigo-500" /> },
-    ],
-  },
-  {
-    category: "Database",
-    glowColor: "rgba(168,85,247,0.15)",
-    icon: <FaDatabase size={28} className="text-purple-500" />,
-    skills: [
-      { name: "MongoDB", level: 80, icon: <SiMongodb className="text-green-700 w-6 h-6" /> },
-      { name: "PostgreSQL", level: 75, icon: <FaDatabase className="text-purple-500 w-6 h-6" /> },
-      { name: "MySQL", level: 70, icon: <FaDatabase className="text-blue-500 w-6 h-6" /> },
-    ],
-  },
-];
+type SkillRecord = {
+  name: string;
+  category: string;
+  proficiency: number;
+  icon: string;
+  order: number;
+};
 
-export default function Skills() {
+type SkillsProps = {
+  skills: SkillRecord[];
+};
+
+const getCategoryGlow = (category: string) => {
+  if (category.toLowerCase().includes("front")) return "rgba(99,102,241,0.18)";
+  if (category.toLowerCase().includes("back")) return "rgba(34,197,94,0.15)";
+  return "rgba(168,85,247,0.15)";
+};
+
+const getCategoryIcon = (category: string) => {
+  if (category.toLowerCase().includes("front")) return <FaReact size={28} className="text-indigo-500" />;
+  if (category.toLowerCase().includes("back")) return <FaNodeJs size={28} className="text-green-500" />;
+  return <FaDatabase size={28} className="text-purple-500" />;
+};
+
+export default function Skills({ skills }: SkillsProps) {
   const containerRef = useRef(null);
   const [particles, setParticles] = useState<Particle[]>([]);
 
@@ -76,6 +66,21 @@ export default function Skills() {
     moveParticles();
   }, []);
 
+  const groupedSkills = skills.reduce<Record<string, SkillRecord[]>>((acc, skill) => {
+    const category = skill.category || "General";
+    acc[category] = [...(acc[category] || []), skill];
+    return acc;
+  }, {});
+
+  const categories = Object.entries(groupedSkills)
+    .map(([category, items]) => ({
+      category,
+      glowColor: getCategoryGlow(category),
+      icon: getCategoryIcon(category),
+      skills: items.sort((a, b) => a.order - b.order),
+    }))
+    .sort((a, b) => a.category.localeCompare(b.category));
+
   return (
     <section
       id="skills"
@@ -102,53 +107,62 @@ export default function Skills() {
       </div>
 
       {/* Skill Grid */}
-      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 relative z-10">
-        {skillCategories.map(category => (
-          <motion.div
-            key={category.category}
-            className="relative bg-white/90 dark:bg-gray-950/80 rounded-3xl p-8 shadow-xl border border-gray-200/20 dark:border-gray-800/50 overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Glow effect */}
-            <div
-              className="absolute inset-0 -z-10 blur-3xl rounded-3xl"
-              style={{ backgroundColor: category.glowColor }}
-            />
+      {categories.length === 0 ? (
+        <div className="relative z-10 rounded-3xl border border-dashed border-slate-300 bg-white/70 p-8 text-center text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-300">
+          <p className="text-lg font-semibold text-slate-900 dark:text-white">No skills yet</p>
+          <p className="mt-2 text-sm">Add skills from the admin dashboard to populate this section.</p>
+        </div>
+      ) : (
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3 relative z-10">
+          {categories.map(category => (
+            <motion.div
+              key={category.category}
+              className="relative bg-white/90 dark:bg-gray-950/80 rounded-3xl p-8 shadow-xl border border-gray-200/20 dark:border-gray-800/50 overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              {/* Glow effect */}
+              <div
+                className="absolute inset-0 -z-10 blur-3xl rounded-3xl"
+                style={{ backgroundColor: category.glowColor }}
+              />
 
-            <div className="flex items-center gap-3 mb-6">
-              {category.icon}
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{category.category}</h3>
-            </div>
+              <div className="flex items-center gap-3 mb-6">
+                {category.icon}
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{category.category}</h3>
+              </div>
 
-            <div className="flex flex-wrap gap-6">
-              {category.skills.map(skill => (
-                <motion.div
-                  key={skill.name}
-                  className="flex flex-col w-full sm:w-48 md:w-56 lg:w-64 bg-white/80 dark:bg-gray-900/70 rounded-2xl shadow-lg p-4 cursor-pointer border border-gray-200/30 dark:border-gray-800/30 backdrop-blur-md hover:scale-105 hover:shadow-indigo-400/30 transition-all duration-300"
-                  whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(0,0,0,0.2)" }}
-                >
-                  <div className="flex items-center gap-3 mb-2">
-                    {skill.icon}
-                    <span className="font-semibold text-gray-900 dark:text-white">{skill.name}</span>
-                    <span className="ml-auto text-sm text-gray-500 dark:text-gray-300">{skill.level}%</span>
-                  </div>
-                  <div className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      transition={{ duration: 1.2 }}
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </div>
+              <div className="flex flex-wrap gap-6">
+                {category.skills.map(skill => (
+                  <motion.div
+                    key={skill.name}
+                    className="flex flex-col w-full sm:w-48 md:w-56 lg:w-64 bg-white/80 dark:bg-gray-900/70 rounded-2xl shadow-lg p-4 cursor-pointer border border-gray-200/30 dark:border-gray-800/30 backdrop-blur-md hover:scale-105 hover:shadow-indigo-400/30 transition-all duration-300"
+                    whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(0,0,0,0.2)" }}
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-600">
+                        <SkillIcon iconName={skill.icon} name={skill.name} className="h-5 w-5" />
+                      </div>
+                      <span className="font-semibold text-gray-900 dark:text-white">{skill.name}</span>
+                      <span className="ml-auto text-sm text-gray-500 dark:text-gray-300">{skill.proficiency}%</span>
+                    </div>
+                    <div className="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+                      <motion.div
+                        className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.proficiency}%` }}
+                        transition={{ duration: 1.2 }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -16,6 +16,16 @@ import {
   FaAward,
 } from "react-icons/fa";
 
+type AboutContent = {
+  bio: string;
+  profileImageUrl: string | null;
+};
+
+type AboutMeProps = {
+  aboutContent?: AboutContent | null;
+  cvUrl?: string | null;
+};
+
 // Online workspace image
 const workspaceImg = "/images/developer-workspace.jpg";
 
@@ -59,10 +69,14 @@ const stats = [
   { value: "100%", label: "Client Satisfaction" },
 ];
 
-const CV_PDF_URL = "/images/Mohammad_abdullah_al_maruf (1).pdf";
-
-export default function AboutMe() {
+export default function AboutMe({ aboutContent, cvUrl }: AboutMeProps) {
   const [cvOpen, setCvOpen] = useState(false);
+  const bioParagraphs = (aboutContent?.bio || "")
+    .split(/\n+/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+  const workspaceImage = aboutContent?.profileImageUrl || workspaceImg;
+  const CV_PDF_URL = cvUrl || "/images/Mohammad_abdullah_al_maruf (1).pdf";
 
   return (
     <section className="relative overflow-hidden px-4 sm:px-6 lg:px-10 py-20 md:py-28 section-gradient min-h-screen flex items-center">
@@ -97,12 +111,18 @@ export default function AboutMe() {
           <div className="space-y-8">
             {/* Bio */}
             <div className="space-y-4 text-slate-700 dark:text-slate-300 text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 text-center lg:text-left">
-              <p>
-                Hi, I'm <span className="font-semibold text-indigo-600">Maruf</span> — a passionate full-stack developer dedicated to building scalable, performant, and beautifully designed web applications.
-              </p>
-              <p>
-                I specialize in transforming ideas into production-ready digital products with a strong emphasis on clean code, intuitive user interfaces, and exceptional user experiences.
-              </p>
+              {bioParagraphs.length > 0 ? (
+                bioParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+              ) : (
+                <>
+                  <p>
+                    Hi, I'm <span className="font-semibold text-indigo-600">Maruf</span> — a passionate full-stack developer dedicated to building scalable, performant, and beautifully designed web applications.
+                  </p>
+                  <p>
+                    I specialize in transforming ideas into production-ready digital products with a strong emphasis on clean code, intuitive user interfaces, and exceptional user experiences.
+                  </p>
+                </>
+              )}
             </div>
 
             {/* Highlights */}
@@ -155,7 +175,7 @@ export default function AboutMe() {
             <div className="hidden md:block w-full max-w-sm rounded-3xl glass-card p-5">
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden ring-4 ring-indigo-500/10">
                 <img
-                  src={workspaceImg}
+                  src={workspaceImage}
                   alt="Modern developer workspace"
                   className="w-full h-full object-cover"
                 />

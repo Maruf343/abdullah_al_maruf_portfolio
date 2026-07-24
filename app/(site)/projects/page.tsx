@@ -1,6 +1,13 @@
 import Projects from "../../../components/sections/Projects";
+import { prisma } from "../../../lib/prisma";
 
-export default function ProjectsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ProjectsPage() {
+  const projects = await prisma.project.findMany({
+    orderBy: [{ featured: "desc" }, { order: "asc" }],
+  });
+
   return (
     <div className="space-y-10 pb-10">
       <div className="rounded-[2rem] border border-slate-200 bg-white/90 p-8 shadow-soft backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/80 md:p-12">
@@ -9,7 +16,7 @@ export default function ProjectsPage() {
           Selected work demonstrating polished interfaces, modern interactions, and reliable development patterns.
         </p>
       </div>
-      <Projects />
+      <Projects projects={projects} />
     </div>
   );
 }

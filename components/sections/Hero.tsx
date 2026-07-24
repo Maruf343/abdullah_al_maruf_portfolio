@@ -2,26 +2,48 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import heroImg from "../../public/images/maruf.png";
 import { FaReact, FaNodeJs } from "react-icons/fa";
 import { SiNextdotjs, SiTailwindcss, SiMongodb } from "react-icons/si";
 import Button from "../ui/Button";
 
-const fullName = "Mohammad Abdullah Al Maruf";
+type HeroContent = {
+  name: string;
+  tagline: string;
+  roles: string[];
+  cvUrl: string | null;
+  profileImageUrl: string | null;
+};
 
-export default function Hero() {
+type HeroProps = {
+  heroContent?: HeroContent | null;
+};
+
+const fallbackName = "Mohammad Abdullah Al Maruf";
+const fallbackRoles = ["Frontend & MERN Stack Developer"];
+const fallbackTagline = "I build modern, responsive, high-performance web applications with MongoDB, Express, React, Next.js, Node.js.";
+
+export default function Hero({ heroContent }: HeroProps) {
+  const name = heroContent?.name || fallbackName;
+  const roles = heroContent?.roles?.filter(Boolean) || fallbackRoles;
+  const tagline = heroContent?.tagline || fallbackTagline;
+  const profileImageSrc = heroContent?.profileImageUrl || "/images/maruf.png";
   const [typed, setTyped] = useState("");
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (index < fullName.length) {
+    setTyped("");
+    setIndex(0);
+  }, [name]);
+
+  useEffect(() => {
+    if (index < name.length) {
       const timeout = setTimeout(() => {
-        setTyped(fullName.slice(0, index + 1));
+        setTyped(name.slice(0, index + 1));
         setIndex(index + 1);
       }, 100);
       return () => clearTimeout(timeout);
     }
-  }, [index]);
+  }, [index, name]);
 
   return (
     <section className="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-indigo-50 to-white p-4 sm:p-8 md:p-16 shadow-lg dark:from-gray-900 dark:to-gray-950">
@@ -32,7 +54,7 @@ export default function Hero() {
         <div className="space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
 
           <p className="text-indigo-600 font-medium tracking-wider uppercase text-sm dark:text-indigo-400">
-            Frontend & MERN Stack Developer
+            {roles.join(" • ")}
           </p>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
@@ -44,14 +66,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-gray-700 dark:text-gray-300 max-w-xl text-base sm:text-lg leading-relaxed">
-            I build{" "}
-            <span className="font-semibold text-indigo-500">
-              modern, responsive, high-performance
-            </span>{" "}
-            web applications with{" "}
-            <span className="font-semibold text-indigo-500">
-              MongoDB, Express, React, Next.js, Node.js
-            </span>.
+            {tagline}
           </p>
 
           {/* BUTTONS */}
@@ -74,8 +89,8 @@ export default function Hero() {
         <div className="relative flex justify-center items-center">
           <div className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500">
             <Image
-              src={heroImg}
-              alt="Mohammad Abdullah Al Maruf"
+              src={profileImageSrc}
+              alt={name}
               fill
               className="object-cover"
               priority

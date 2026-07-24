@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { createContactEmailTemplate } from "../../../lib/emailTemplates";
+import { prisma } from "../../../lib/prisma";
 
 export const runtime = "nodejs";
 
@@ -10,38 +11,45 @@ export async function POST(request: Request) {
 
   console.log("Contact request received:", { name, email, message });
 
-  // Create transporter
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  // Create HTML email template
-  const htmlContent = createContactEmailTemplate(name, email, message);
-
-  // Email options
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: process.env.EMAIL_USER, // Send to yourself
-    subject: `🚀 New Contact: ${name} wants to connect!`,
-    html: htmlContent,
-    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`, // Fallback for email clients that don't support HTML
-  };
-
   try {
+    const savedMessage = await prisma.message.create({
+      data: {
+        name: name.trim(),
+        email: email.trim(),
+        message: message.trim(),
+      },
+    });
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const htmlContent = createContactEmailTemplate(name, email, message);
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
+      subject: `🚀 New Contact: ${name} wants to connect!`,
+      html: htmlContent,
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    };
+
     await transporter.sendMail(mailOptions);
+
     return NextResponse.json(
       {
         success: true,
-        message: "Thanks for getting in touch! We received your message and sent it to our inbox.",
+        message: "Thanks for getting in touch! We received your message and stored it in the admin inbox.",
+        id: savedMessage.id,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error processing contact message:", error);
     return NextResponse.json(
       {
         success: false,
