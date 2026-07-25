@@ -10,7 +10,11 @@ export default async function AdminMessagesPage() {
   const session = await auth();
 
   if (!session) {
-    redirect("/admin/login");
+    redirect("/login");
+  }
+
+  if (session.user.role !== "admin") {
+    redirect("/client/dashboard");
   }
 
   const messages = await withDbFallback(

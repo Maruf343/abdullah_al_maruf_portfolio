@@ -15,7 +15,7 @@ export type ProjectActionState = {
 async function requireAdmin() {
   const session = await auth();
 
-  if (!session?.user?.email) {
+  if (!session?.user?.email || session.user.role !== "admin") {
     throw new Error("Unauthorized");
   }
 }
@@ -50,6 +50,7 @@ export async function createProject(_prevState: ProjectActionState | undefined, 
   const description = formData.get("description")?.toString().trim() || "";
   const liveUrl = formData.get("liveUrl")?.toString().trim() || "";
   const repoUrl = formData.get("repoUrl")?.toString().trim() || "";
+  const category = formData.get("category")?.toString().trim() || "Other";
   const order = Number(formData.get("order") || 0);
   const featured = formData.get("featured") === "on";
   const techStackValue = formData.get("techStack")?.toString().trim() || "";
@@ -77,6 +78,7 @@ export async function createProject(_prevState: ProjectActionState | undefined, 
         imageUrl,
         liveUrl,
         repoUrl,
+        category,
         featured,
         order,
       },
@@ -104,6 +106,7 @@ export async function updateProject(_prevState: ProjectActionState | undefined, 
   const description = formData.get("description")?.toString().trim() || "";
   const liveUrl = formData.get("liveUrl")?.toString().trim() || "";
   const repoUrl = formData.get("repoUrl")?.toString().trim() || "";
+  const category = formData.get("category")?.toString().trim() || "Other";
   const order = Number(formData.get("order") || 0);
   const featured = formData.get("featured") === "on";
   const techStackValue = formData.get("techStack")?.toString().trim() || "";
@@ -134,6 +137,7 @@ export async function updateProject(_prevState: ProjectActionState | undefined, 
         imageUrl: nextImageUrl,
         liveUrl,
         repoUrl,
+        category,
         featured,
         order,
       },

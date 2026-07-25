@@ -1,10 +1,22 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { auth } from "../../../auth";
 import { prisma } from "../../../lib/prisma";
 import DeleteSkillButton from "./DeleteSkillButton";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminSkillsPage() {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/login");
+  }
+
+  if (session.user.role !== "admin") {
+    redirect("/client/dashboard");
+  }
+
   const skills = await prisma.skill.findMany({
     orderBy: [{ category: "asc" }, { order: "asc" }, { name: "asc" }],
   });

@@ -15,6 +15,7 @@ model Project {
   imageUrl    String
   liveUrl     String
   repoUrl     String
+  category    String   @default("Other")
   featured    Boolean  @default(false)
   order       Int
   createdAt   DateTime @default(now())
@@ -43,6 +44,50 @@ model AboutContent {
   id              Int     @id @default(autoincrement())
   bio             String
   profileImageUrl String
+}
+
+model Client {
+  id              Int                  @id @default(autoincrement())
+  name            String
+  email           String               @unique
+  passwordHash    String
+  company         String?
+  avatarUrl       String?
+  createdAt       DateTime             @default(now())
+  lastLoginAt     DateTime?
+  testimonials    Testimonial[]
+  passwordTokens  PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id        Int       @id @default(autoincrement())
+  clientId  Int
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  client    Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+}
+
+model Testimonial {
+  id         Int       @id @default(autoincrement())
+  name       String
+  email      String?
+  message    String
+  rating     Int?
+  status     String    @default("pending")
+  approvedAt DateTime?
+  clientId   Int?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  client     Client?   @relation(fields: [clientId], references: [id], onDelete: SetNull)
+}
+
+model PageView {
+  id         Int      @id @default(autoincrement())
+  path       String
+  visitorKey String?
+  createdAt  DateTime @default(now())
 }
 
 model Message {

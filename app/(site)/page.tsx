@@ -10,15 +10,17 @@ import { withDbFallback } from "../../lib/dbSafe";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [heroContent, projects, aboutContent, skills] = await Promise.all([
+  const [heroContent, projects, totalProjectsCount, aboutContent, skills] = await Promise.all([
     withDbFallback(() => prisma.heroContent.findFirst(), null),
     withDbFallback(
       () =>
         prisma.project.findMany({
           orderBy: [{ featured: "desc" }, { order: "asc" }],
+          take: 6,
         }),
       []
     ),
+    withDbFallback(() => prisma.project.count(), 0),
     withDbFallback(() => prisma.aboutContent.findFirst(), null),
     withDbFallback(() => prisma.skill.findMany({ orderBy: [{ category: "asc" }, { order: "asc" }] }), []),
   ]);
@@ -26,7 +28,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-16 sm:space-y-20 md:space-y-24 pb-16 sm:pb-20 md:pb-24">
       <Hero heroContent={heroContent} />
-      <Projects projects={projects} />
+      <Projects projects={projects} showViewAllButton={totalProjectsCount > 6} totalProjectsCount={totalProjectsCount} />
       <AboutMe aboutContent={aboutContent} cvUrl={heroContent?.cvUrl ?? null} />
       <Skills skills={skills} />
       <TechNews />

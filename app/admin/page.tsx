@@ -7,7 +7,11 @@ export default async function AdminPage() {
   const session = await auth();
 
   if (!session) {
-    redirect("/admin/login");
+    redirect("/login");
+  }
+
+  if (session.user.role !== "admin") {
+    redirect("/client/dashboard");
   }
 
   const [projectCount, messageCount, unreadCount] = await Promise.all([

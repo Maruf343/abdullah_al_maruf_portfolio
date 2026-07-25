@@ -8,7 +8,7 @@ export default function AdminLogoutPage() {
   const router = useRouter();
 
   useEffect(() => {
-    signOut({ redirect: false }).finally(() => router.replace("/admin/login"));
+    signOut({ redirect: false }).finally(() => router.replace("/login"));
   }, [router]);
 
   return null;

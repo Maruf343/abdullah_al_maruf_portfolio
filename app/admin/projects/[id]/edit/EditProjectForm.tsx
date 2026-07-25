@@ -14,6 +14,7 @@ type ProjectFormValues = {
   imageUrl: string;
   liveUrl: string;
   repoUrl: string;
+  category: string;
   featured: boolean;
   order: number;
 };
@@ -46,6 +47,16 @@ export default function EditProjectForm({ project }: { project: ProjectFormValue
         <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
           <span>Order</span>
           <input type="number" name="order" defaultValue={project.order} className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-white" />
+        </label>
+        <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+          <span>Category</span>
+          <select name="category" defaultValue={project.category ?? "Other"} className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-white">
+            <option value="Web App">Web App</option>
+            <option value="Mobile">Mobile</option>
+            <option value="API/Backend">API/Backend</option>
+            <option value="Open Source">Open Source</option>
+            <option value="Other">Other</option>
+          </select>
         </label>
         <label className="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300 md:col-span-2">
           <span>Description</span>

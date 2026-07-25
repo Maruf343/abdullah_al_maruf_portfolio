@@ -1,36 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import Image from "next/image";
-
-type ProjectRecord = {
-  title: string;
-  description: string;
-  imageUrl: string;
-  liveUrl: string;
-  repoUrl: string;
-  featured: boolean;
-  order: number;
-};
+import Link from "next/link";
+import ProjectCard, { type ProjectCardItem } from "./ProjectCard";
 
 type ProjectsProps = {
-  projects: ProjectRecord[];
+  projects: ProjectCardItem[];
+  showViewAllButton?: boolean;
+  totalProjectsCount?: number;
 };
 
-export default function Projects({ projects }: ProjectsProps) {
+export default function Projects({ projects, showViewAllButton = false, totalProjectsCount = 0 }: ProjectsProps) {
   return (
     <section
       id="projects"
-      className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-indigo-50 p-8 shadow-soft backdrop-blur-xl dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:border-slate-800 dark:bg-slate-950/80 md:p-12"
+      className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-indigo-50 p-6 shadow-soft backdrop-blur-xl dark:border-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:bg-slate-950/80 sm:p-8 md:p-12"
     >
-      <div className="mb-12 space-y-3 text-center">
-        <p className="text-sm uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">
-          Featured work
-        </p>
-        <h2 className="text-4xl font-extrabold text-slate-950 dark:text-white sm:text-5xl">
-          Projects
-        </h2>
+      <div className="mb-10 space-y-3 text-center sm:mb-12">
+        <p className="text-sm uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">Featured work</p>
+        <h2 className="text-4xl font-extrabold text-slate-950 dark:text-white sm:text-5xl">Projects</h2>
         <p className="mx-auto max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-300">
           Selected case studies that highlight polished interfaces, modern interactions, and thoughtful frontend architecture.
         </p>
@@ -42,45 +29,23 @@ export default function Projects({ projects }: ProjectsProps) {
           <p className="mt-2 text-sm">Create your first project in the admin dashboard to see it here.</p>
         </div>
       ) : (
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <motion.article
-              key={project.title}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, delay: index * 0.15 }}
-              className="group overflow-hidden rounded-3xl border border-slate-200 bg-white/90 shadow-soft transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-950/80"
-            >
-              <div className="overflow-hidden bg-slate-100 dark:bg-slate-900">
-                <Image
-                  src={project.imageUrl || "/images/portfoliScreenShort.PNG"}
-                  alt={project.title}
-                  width={1200}
-                  height={560}
-                  className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="space-y-5 p-6">
-                <div>
-                  <h3 className="text-2xl font-semibold text-slate-950 dark:text-white">
-                    {project.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                    {project.description}
-                  </p>
-                </div>
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 transition hover:text-indigo-500"
-                >
-                  View Live <FaExternalLinkAlt className="h-4 w-4" />
-                </a>
-              </div>
-            </motion.article>
-          ))}
+        <div className="space-y-6 sm:space-y-8">
+          <div className="grid gap-6 sm:gap-7 md:grid-cols-2 xl:grid-cols-3">
+            {projects.map((project, index) => (
+              <ProjectCard key={`${project.title}-${project.id ?? index}`} project={project} index={index} />
+            ))}
+          </div>
+
+          {showViewAllButton && totalProjectsCount > 6 ? (
+            <div className="flex justify-center">
+              <Link
+                href="/projects"
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-indigo-600 to-violet-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-900/25 transition hover:from-indigo-700 hover:to-violet-600"
+              >
+                View All Projects
+              </Link>
+            </div>
+          ) : null}
         </div>
       )}
     </section>

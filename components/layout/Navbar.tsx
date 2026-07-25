@@ -172,7 +172,7 @@ export default function Navbar() {
                   toggleTheme();
                   setMobileOpen(false);
                 }}
-                className="block rounded-2xl px-4 py-3 text-base font-medium text-left text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition"
+                className="block rounded-2xl px-4 py-3 text-left text-base font-medium text-slate-700 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
               >
                 {mounted ? (theme === "dark" ? "Light Mode" : "Dark Mode") : "Theme"}
               </button>
